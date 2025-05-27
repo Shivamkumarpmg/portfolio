@@ -10,7 +10,6 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'constants/api_constants.dart';
-import 'modules/auth/login/login_repository.dart';
 import 'modules/launch/launch_provider.dart';
 
 final sl = GetIt.instance;

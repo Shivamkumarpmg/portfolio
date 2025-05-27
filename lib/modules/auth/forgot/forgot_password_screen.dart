@@ -140,10 +140,10 @@ class _ForgotScreenState extends State<ForgotScreen> {
                           child: CustomButton(
                             text: "Verify Mail",
                             onTap: () {
-                              var verifyJsonData = {
-                                "email":
-                                    provider.emailController.value.text.trim(),
-                              };
+                              // var verifyJsonData = {
+                              //   "email":
+                              //       provider.emailController.value.text.trim(),
+                              // };
                               // if ((controller.checkValid()) &&
                               //     (controller.checkEmailValidation(
                               //       controller.emailController.text,

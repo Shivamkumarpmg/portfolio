@@ -1,4 +1,4 @@
-package com.example.bvg_partner
+package com.open_work
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,8 +1,10 @@
+import 'package:bvg_partner/firebase_options.dart';
 import 'package:bvg_partner/modules/auth/forgot/forgot_provider.dart';
 import 'package:bvg_partner/modules/auth/login/login_provider.dart';
 import 'package:bvg_partner/routes/app_router.dart';
 import 'package:bvg_partner/utils/theme/app_theme.dart';
 import 'package:bvg_partner/utils/theme/theme_provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +13,9 @@ import 'modules/launch/launch_provider.dart';
 
 Future<Widget> initializeApp()async{
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
   await di.initDi();
   return MultiProvider(
     providers: [

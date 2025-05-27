@@ -6,8 +6,8 @@ class CustomButton extends StatelessWidget {
   final Color textColor;
   final Color? buttonColor;
   final VoidCallback onTap;
-  double? fontSize;
-  bool? isLoading;
+  final double? fontSize;
+  final bool? isLoading;
 
   CustomButton({
     super.key,

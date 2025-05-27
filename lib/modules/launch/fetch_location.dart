@@ -45,6 +45,12 @@ class _FetchLocationState extends State<FetchLocation>
       body: Center(
         child: Consumer<LaunchProvider>(
           builder: (context, provider, child) {
+            final locationStatus = context.watch<LaunchProvider>().locationStatus;
+            if(locationStatus == LocationStatus.success){
+              Future.delayed(const Duration(seconds: 2), () {
+                context.pushNamed(RouteConst.loginScreenRoute);
+              });
+            }
             return FadeTransition(
               opacity: _animation,
               child: Container(
@@ -95,7 +101,6 @@ class _FetchLocationState extends State<FetchLocation>
                             textAlign: TextAlign.center,
                           ),
                           SizedBox(height: 20),
-
                           CustomButton(
                             text: "Continue",
                             onTap: () {

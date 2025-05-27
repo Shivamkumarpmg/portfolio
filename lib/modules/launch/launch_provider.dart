@@ -43,7 +43,9 @@ class LaunchProvider extends ChangeNotifier {
 
       // Get current position
       Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
+        locationSettings: LocationSettings(
+            accuracy: LocationAccuracy.high
+        ),
       );
 
       currentLocation = LocationModel(

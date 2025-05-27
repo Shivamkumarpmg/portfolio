@@ -7,37 +7,22 @@ import '../../../constants/constants.dart';
 import '../../../routes/route_const.dart';
 import '../../../services/login_services/google_sign_in_service.dart';
 import '../../../widgets/widgets.dart';
-import 'login_provider.dart';
+import '../login/login_provider.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegistrationScreen extends StatefulWidget {
+  const RegistrationScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegistrationScreen> createState() => _RegistrationScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Consumer<LoginProvider>(
         builder: (context, provider, child) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (provider.loginStatus == STATUSAPI.errorState) {
-              showCustomSnackBar(
-                context,
-                message: provider.loginData.message ?? 'Something went wrong!',
-                isError: true,
-              );
-            } else if (provider.loginStatus == STATUSAPI.successState) {
-              showCustomSnackBar(
-                context,
-                message: provider.loginData.message ?? 'Success',
-                isError: false,
-              );
-            }
-          });
           return Container(
             padding: EdgeInsets.all(20),
             child: Stack(
@@ -49,12 +34,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        spacing: 10,
+                        spacing: 6,
                         children: [
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              'Log In',
+                              'Register',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
@@ -66,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              '(Employee/Supervisor)',
+                              'Create your account',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
@@ -75,6 +60,32 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           SizedBox(height: 16),
+                          AppTextField(
+                            textInputAction: TextInputAction.next,
+                            textInputType: TextInputType.emailAddress,
+                            textCapitalization: TextCapitalization.none,
+                            prefixeIcon: Icon(
+                              Icons.mail_outline_outlined,
+                              color: ColorConst.greyFourth,
+                            ),
+                            title: "Name",
+                            controller: provider.emailController,
+                            maxLength: 50,
+                          ),
+                          SizedBox(height: 6),
+                          AppTextField(
+                            textInputAction: TextInputAction.next,
+                            textInputType: TextInputType.emailAddress,
+                            textCapitalization: TextCapitalization.none,
+                            prefixeIcon: Icon(
+                              Icons.mail_outline_outlined,
+                              color: ColorConst.greyFourth,
+                            ),
+                            title: "Mobile Number",
+                            controller: provider.emailController,
+                            maxLength: 50,
+                          ),
+                          SizedBox(height: 6),
                           AppTextField(
                             textInputAction: TextInputAction.next,
                             textInputType: TextInputType.emailAddress,
@@ -104,37 +115,44 @@ class _LoginScreenState extends State<LoginScreen> {
                                 provider.togglePasswordVisibility();
                               },
                               icon:
-                                  provider.showPassword
-                                      ? Icon(
-                                        Icons.visibility_off_outlined,
-                                        color: ColorConst.greyFourth,
-                                      )
-                                      : Icon(
-                                        Icons.visibility_outlined,
-                                        color: ColorConst.greyFourth,
-                                      ),
+                              provider.showPassword
+                                  ? Icon(
+                                Icons.visibility_off_outlined,
+                                color: ColorConst.greyFourth,
+                              )
+                                  : Icon(
+                                Icons.visibility_outlined,
+                                color: ColorConst.greyFourth,
+                              ),
                             ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Checkbox(
-                                activeColor: ColorConst.themeColor,
-                                checkColor: Colors.white,
-                                value: provider.stayLoggedIn,
-                                onChanged: (value) {
-                                  provider.toggleStayLoggedIn();
-                                },
+                          SizedBox(height: 6),
+                          AppTextField(
+                            textInputAction: TextInputAction.done,
+                            textInputType: TextInputType.emailAddress,
+                            prefixeIcon: Icon(
+                              Icons.password,
+                              color: ColorConst.greyFourth,
+                            ),
+                            title: "Confirm Password",
+                            controller: provider.passwordController,
+                            maxLength: 50,
+                            showPassword: provider.showPassword,
+                            sufixeIcon: IconButton(
+                              onPressed: () {
+                                provider.togglePasswordVisibility();
+                              },
+                              icon:
+                              provider.showPassword
+                                  ? Icon(
+                                Icons.visibility_off_outlined,
+                                color: ColorConst.greyFourth,
+                              )
+                                  : Icon(
+                                Icons.visibility_outlined,
+                                color: ColorConst.greyFourth,
                               ),
-                              Text(
-                                "Stay Logged in",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                  fontFamily: AppFonts.themeFont,
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
                           SizedBox(
                             width: double.infinity,
@@ -142,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: CustomButton(
                               text: "Login",
                               isLoading:
-                                  provider.loginStatus == STATUSAPI.loading,
+                              provider.loginStatus == STATUSAPI.loading,
                               onTap: () {
                                 if (!provider.checkValid()) {
                                   showCustomSnackBar(
@@ -182,36 +200,36 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           const SizedBox(height: 40),
                           Container(
-                            height: 30,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                          ),
-                            child: Row(
-                              spacing: 30,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                InkWell(
-                                  onTap: () async{
-                                    final user = await GoogleSignInProvider().signInWithGoogle();
-                                    if (user != null) {
-                                      print('Signed in as ${user.displayName}');
-                                    }
-                                  },
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Image.asset(ConstImage.googleLogin, fit: BoxFit.fill),
-                                ),
-                                InkWell(
+                              height: 30,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Row(
+                                spacing: 30,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  InkWell(
+                                    onTap: () async{
+                                      final user = await GoogleSignInProvider().signInWithGoogle();
+                                      if (user != null) {
+                                        print('Signed in as ${user.displayName}');
+                                      }
+                                    },
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Image.asset(ConstImage.googleLogin, fit: BoxFit.fill),
+                                  ),
+                                  InkWell(
                                     onTap: () {},
                                     borderRadius: BorderRadius.circular(20),
                                     child: Image.asset(ConstImage.xLogin, fit: BoxFit.fill),
-                                ),InkWell(
+                                  ),InkWell(
                                     onTap: () {},
                                     borderRadius: BorderRadius.circular(20),
                                     child: Image.asset(ConstImage.appleLogin, fit: BoxFit.fill),
-                                ),
-                              ],
-                            )
+                                  ),
+                                ],
+                              )
                           ),
                         ],
                       ),
@@ -225,7 +243,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Don’t have an account?',
+                        'Already registered ?',
                         style: TextStyle(
                           color: Colors.black,
                           fontFamily: AppFonts.themeFont,
@@ -233,12 +251,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       InkWell(
-                        onTap: () {
-                          context.pushNamed(RouteConst.regScreenRoute);
-                        },
+                        onTap: () {},
                         borderRadius: BorderRadius.circular(10),
                         child: Text(
-                          "Register Now",
+                          "Login In",
                           style: TextStyle(
                             fontFamily: AppFonts.themeFont,
                             color: ColorConst.themeColor,

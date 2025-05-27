@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "479483484599",
+    "project_id": "openwork-98dc7",
+    "storage_bucket": "openwork-98dc7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:479483484599:android:01cc95afdca8627be23032",
+        "android_client_info": {
+          "package_name": "com.open_work"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFX2jLoDiXbpaZahY6SCuG-43HrKr7Yh8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

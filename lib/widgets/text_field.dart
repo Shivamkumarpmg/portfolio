@@ -6,15 +6,15 @@ class AppTextField extends StatelessWidget {
   final Icon? prefixeIcon;
   final String title;
   final TextEditingController controller;
-  TextInputAction? textInputAction;
-  TextInputType?textInputType;
-  TextCapitalization? textCapitalization;
-  int? maxLength;
+  final TextInputAction? textInputAction;
+  final TextInputType?textInputType;
+  final TextCapitalization? textCapitalization;
+  final int? maxLength;
   final Widget? sufixeIcon;
   final bool?readOnly;
-  int?maxLine;
-  VoidCallback? onTap;
-  bool showPassword;
+  final int?maxLine;
+  final VoidCallback? onTap;
+  final bool showPassword;
   AppTextField(
       {super.key,
         this.prefixeIcon,

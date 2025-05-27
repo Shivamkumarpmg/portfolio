@@ -1,4 +1,5 @@
 import 'package:bvg_partner/modules/auth/forgot/forgot_password_screen.dart';
+import 'package:bvg_partner/modules/auth/registration/registration_screen.dart';
 import 'package:bvg_partner/routes/route_const.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -31,6 +32,13 @@ class AppRouterConfig{
         path: '/login',
         pageBuilder: (context, state) {
           return const MaterialPage(child: LoginScreen());
+        },
+      ),
+      GoRoute(
+        name: RouteConst.regScreenRoute,
+        path: '/register',
+        pageBuilder: (context, state) {
+          return const MaterialPage(child: RegistrationScreen());
         },
       ),
       GoRoute(

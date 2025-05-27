@@ -1,6 +1,5 @@
 import 'package:bvg_partner/constants/constants.dart';
 import 'package:bvg_partner/constants/global_data_store.dart';
-import 'package:bvg_partner/modules/auth/login/login_repository.dart';
 import 'package:bvg_partner/modules/auth/login/login_response.dart';
 import 'package:bvg_partner/services/api_services/api_dynamic_response.dart';
 import 'package:bvg_partner/services/api_services/api_service.dart';

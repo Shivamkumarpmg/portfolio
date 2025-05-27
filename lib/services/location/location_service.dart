@@ -26,7 +26,9 @@ class LocationService {
 
     // If permissions are granted, get the position
     return await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
+      locationSettings: LocationSettings(
+        accuracy: LocationAccuracy.high
+      ),
     );
   }
 }
