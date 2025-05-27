@@ -1,0 +1,47 @@
+# Flutter/Dart related
+.dart_tool/
+.packages
+.pub-cache/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.melos_tool/
+/ios/Flutter/Flutter.framework/
+/android/app/build/
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment-specific
+.env
+.env.*
+
+# Flutter native builds
+android/.gradle/
+android/app/build/
+ios/Pods/
+ios/Runner.xcworkspace/
+ios/build/
+macos/Pods/
+macos/build/
+web/.dart_tool/
+
+# Xcode
+xcuserdata/
+DerivedData/
+
+# Lint/analysis
+analysis_options.yaml
+
+# Tests and coverage
+coverage/
+test_outputs/
