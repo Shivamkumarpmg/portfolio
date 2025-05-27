@@ -1,13 +1,11 @@
 import 'dart:convert';
-
-import 'package:bvg_partner/utils/common/common_functions.dart';
 import 'package:encrypt/encrypt.dart';
 
 import 'env.dart';
 
 
 class Aes{
-  late var _key = Key.fromUtf8(Env.aesKey);
+  late final _key = Key.fromUtf8(Env.aesKey);
   final mode = AESMode.cbc;
   final iv = IV.allZerosOfLength(16);
 

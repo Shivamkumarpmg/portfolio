@@ -4,3 +4,6 @@ build/
 
 build/
 .dart_tool/
+.env
+.dart_tool
+build
