@@ -47,12 +47,12 @@
     &quot;assignee&quot;: &quot;shivamFlutter&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;git@github.com:Shivamkumarpmg/portfolio.git&quot;,
-    &quot;accountId&quot;: &quot;188b824b-ef4f-43d7-96a1-def5c942360f&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Shivamkumarpmg/portfolio.git",
+    "accountId": "188b824b-ef4f-43d7-96a1-def5c942360f"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 8
@@ -83,6 +83,7 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "develop",
     "io.flutter.reload.alreadyRun": "true",
     "last_opened_file_path": "/Users/macbook/work/flutter-project/bvg_partner/lib/modules/super_visor",
     "settings.editor.selected.configurable": "dart.settings",
@@ -128,5 +129,8 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
     </layout>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="GROUP_MULTIFILE_MERGE_BY_DIRECTORY" value="true" />
   </component>
 </project>
