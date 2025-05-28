@@ -12,7 +12,20 @@
           "package_name": "com.open_work"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "479483484599-9efafln6fb9pd4e94man5nj8ps46q5ek.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.open_work",
+            "certificate_hash": "f539cbc6a2642f4199c169008410be444bac766d"
+          }
+        },
+        {
+          "client_id": "479483484599-l42kl4aiht66t9p4fosd9fp3b7lg4841.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDFX2jLoDiXbpaZahY6SCuG-43HrKr7Yh8"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "479483484599-l42kl4aiht66t9p4fosd9fp3b7lg4841.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "479483484599-s48hutaj1uqcij5i4hkkfcpgn3gjnj6k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.openwork"
+              }
+            }
+          ]
         }
       }
     }

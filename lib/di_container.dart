@@ -10,6 +10,7 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'constants/api_constants.dart';
+import 'modules/auth/registration/registration_provider.dart';
 import 'modules/launch/launch_provider.dart';
 
 final sl = GetIt.instance;
@@ -23,9 +24,8 @@ Future<void> initDi() async{
   sl.registerLazySingleton(() => LogInterceptor());
   sl.registerLazySingleton<UserRepo>(() => UserRepo(preferences: sl()));
   sl.registerLazySingleton<ThemeProvider>(() => ThemeProvider());
+  sl.registerLazySingleton<RegistrationProvider>(() => RegistrationProvider());
   sl.registerLazySingleton<LoginProvider>(() => LoginProvider(apiService: ApiService(dioClient: sl(), aes: sl()),userRepo: UserRepo(preferences: sl())));
   sl.registerLazySingleton<ForgotProvider>(()=> ForgotProvider(ApiService(dioClient: sl(), aes: sl())));
   sl.registerLazySingleton<LaunchProvider>(() => LaunchProvider());
-
-
 }

@@ -17,7 +17,7 @@ class LaunchProvider extends ChangeNotifier {
   //Location Service
   LocationModel currentLocation = LocationModel();
   String currentLocationString = "";
-  LocationStatus locationStatus = LocationStatus.inital;
+  LocationStatus locationStatus = LocationStatus.initial;
   Future<void> getCurrentAddress() async {
     try {
       locationStatus = LocationStatus.fetching;

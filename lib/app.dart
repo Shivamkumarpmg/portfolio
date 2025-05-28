@@ -1,6 +1,7 @@
 import 'package:bvg_partner/firebase_options.dart';
 import 'package:bvg_partner/modules/auth/forgot/forgot_provider.dart';
 import 'package:bvg_partner/modules/auth/login/login_provider.dart';
+import 'package:bvg_partner/modules/auth/registration/registration_provider.dart';
 import 'package:bvg_partner/routes/app_router.dart';
 import 'package:bvg_partner/utils/theme/app_theme.dart';
 import 'package:bvg_partner/utils/theme/theme_provider.dart';
@@ -22,6 +23,7 @@ Future<Widget> initializeApp()async{
       ChangeNotifierProvider<ThemeProvider>(create: (context) => di.sl<ThemeProvider>()),
       ChangeNotifierProvider<LaunchProvider>(create: (context) => di.sl<LaunchProvider>()),
       ChangeNotifierProvider<LoginProvider>(create: (context) => di.sl<LoginProvider>()),
+      ChangeNotifierProvider<RegistrationProvider>(create: (context) => di.sl<RegistrationProvider>()),
       ChangeNotifierProvider<ForgotProvider>(create: (context) => di.sl<ForgotProvider>()),
     ],
       child: MyApp());

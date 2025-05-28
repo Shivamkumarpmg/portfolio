@@ -6,6 +6,7 @@ import 'package:bvg_partner/services/api_services/api_service.dart';
 import 'package:bvg_partner/services/location/location_model.dart';
 import 'package:bvg_partner/utils/common/common_functions.dart';
 import 'package:bvg_partner/services/device_info/device_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../services/user_services/user_repo.dart';
@@ -41,11 +42,31 @@ class LoginProvider with ChangeNotifier {
 
   STATUSAPI loginStatus = STATUSAPI.initState;
 
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   login() async {
     loginStatus = STATUSAPI.loading;
 
     notifyListeners();
     try {
+      firestore.collection('users').get().then((value) {
+        List<QueryDocumentSnapshot<Map<String, dynamic>>> data = value.docs;
+        for(var item in data){
+         if(item['email'] == emailController.value.text.trim()){
+           if(item['password'] == passwordController.value.text.trim()){
+             // GlobalDataStore.userInfo = item as UserDetails?;
+             CommonFunctions.printLog("Login Success");
+             loginStatus = STATUSAPI.successState;
+             notifyListeners();
+             return;
+           }else{
+
+           }
+         }
+        }
+
+      });
+      loginStatus = STATUSAPI.successState;
       var loginJsonData = {
         "email": emailController.value.text.trim(),
         "password": passwordController.value.text.trim(),
@@ -56,21 +77,21 @@ class LoginProvider with ChangeNotifier {
         "latitude": locationInfo?.longitude ?? '',
         "longitude": locationInfo?.latitude ?? "",
       };
-      CommonFunctions.printLog("Login Request: $loginJsonData");
-      ApisResponse apisResponse = await apiService.login(loginJsonData);
-      loginData = LoginResponse.fromJson(apisResponse.response?.data);
-      if (loginData.status == true) {
-        GlobalDataStore.userInfo = loginData.data?.userDetails;
-        userRepo.setToken(loginData.data?.token ?? '');
-        userRepo.setPrefValue(loginData.toJson().toString());
-        CommonFunctions.printLog("Token: ${userRepo.getToken()}");
-        loginStatus = STATUSAPI.successState;
-        notifyListeners();
-      } else {
-        loginStatus = STATUSAPI.errorState;
-        notifyListeners();
-        return;
-      }
+      // CommonFunctions.printLog("Login Request: $loginJsonData");
+      // ApisResponse apisResponse = await apiService.login(loginJsonData);
+      // loginData = LoginResponse.fromJson(apisResponse.response?.data);
+      // if (loginData.status == true) {
+      //   GlobalDataStore.userInfo = loginData.data?.userDetails;
+      //   userRepo.setToken(loginData.data?.token ?? '');
+      //   userRepo.setPrefValue(loginData.toJson().toString());
+      //   CommonFunctions.printLog("Token: ${userRepo.getToken()}");
+      //   loginStatus = STATUSAPI.successState;
+      //   notifyListeners();
+      // } else {
+      //   loginStatus = STATUSAPI.errorState;
+      //   notifyListeners();
+      //   return;
+      // }
     } catch (e) {
       loginStatus = STATUSAPI.errorState;
       notifyListeners();

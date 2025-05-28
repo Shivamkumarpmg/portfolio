@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:bvg_partner/utils/common/common_functions.dart';
 import 'package:bvg_partner/widgets/custom_snack.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -36,6 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 message: provider.loginData.message ?? 'Success',
                 isError: false,
               );
+              context.pushNamed(RouteConst.empDashboardRoute);
             }
           });
           return Container(
@@ -44,7 +48,9 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 SingleChildScrollView(
                   child: ConstrainedBox(
-                    constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height),
+                    constraints: BoxConstraints(
+                      minHeight: MediaQuery.of(context).size.height,
+                    ),
                     child: IntrinsicHeight(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -144,21 +150,25 @@ class _LoginScreenState extends State<LoginScreen> {
                               isLoading:
                                   provider.loginStatus == STATUSAPI.loading,
                               onTap: () {
-                                if (!provider.checkValid()) {
-                                  showCustomSnackBar(
-                                    context,
-                                    message: provider.validationError,
-                                  );
-                                } else {
-                                  provider.login();
-                                }
+                                provider.login();
+
+                                // if (!provider.checkValid()) {
+                                //   showCustomSnackBar(
+                                //     context,
+                                //     message: provider.validationError,
+                                //   );
+                                // } else {
+                                //   provider.login();
+                                // }
                               },
                             ),
                           ),
                           const SizedBox(height: 8),
                           InkWell(
                             onTap: () {
-                              context.pushNamed(RouteConst.forgotPassScreenRoute);
+                              context.pushNamed(
+                                RouteConst.forgotPassScreenRoute,
+                              );
                             },
                             borderRadius: BorderRadius.circular(20),
                             child: Text(
@@ -185,33 +195,50 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 30,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                          ),
+                            ),
                             child: Row(
                               spacing: 30,
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 InkWell(
-                                  onTap: () async{
-                                    final user = await GoogleSignInProvider().signInWithGoogle();
+                                  onTap: () async {
+                                    final user =
+                                        await GoogleSignInProvider()
+                                            .signInWithGoogle();
                                     if (user != null) {
-                                      print('Signed in as ${user.displayName}');
+                                      CommonFunctions.printLog(
+                                        'Signed in as ${user}',
+                                      );
                                     }
                                   },
                                   borderRadius: BorderRadius.circular(20),
-                                  child: Image.asset(ConstImage.googleLogin, fit: BoxFit.fill),
+                                  child: Image.asset(
+                                    ConstImage.googleLogin,
+                                    fit: BoxFit.fill,
+                                  ),
                                 ),
                                 InkWell(
+                                  onTap: () {},
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.asset(
+                                    ConstImage.xLogin,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: Platform.isIOS,
+                                  child: InkWell(
                                     onTap: () {},
                                     borderRadius: BorderRadius.circular(20),
-                                    child: Image.asset(ConstImage.xLogin, fit: BoxFit.fill),
-                                ),InkWell(
-                                    onTap: () {},
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: Image.asset(ConstImage.appleLogin, fit: BoxFit.fill),
+                                    child: Image.asset(
+                                      ConstImage.appleLogin,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
                                 ),
                               ],
-                            )
+                            ),
                           ),
                         ],
                       ),
@@ -220,34 +247,40 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: Row(
-                    spacing: 5,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Don’t have an account?',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: AppFonts.themeFont,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          context.pushNamed(RouteConst.regScreenRoute);
-                        },
-                        borderRadius: BorderRadius.circular(10),
-                        child: Text(
-                          "Register Now",
+                  child: Container(
+                    padding: EdgeInsets.only(top: 10),
+                    decoration: BoxDecoration(color: Colors.white),
+                    child: Row(
+                      spacing: 5,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Don’t have an account?',
                           style: TextStyle(
+                            color: Colors.black,
                             fontFamily: AppFonts.themeFont,
-                            color: ColorConst.themeColor,
-                            fontSize: 14,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ),
-                    ],
+                        InkWell(
+                          onTap: () {
+                            context.pushReplacementNamed(
+                              RouteConst.regScreenRoute,
+                            );
+                          },
+                          borderRadius: BorderRadius.circular(10),
+                          child: Text(
+                            "Register Now",
+                            style: TextStyle(
+                              fontFamily: AppFonts.themeFont,
+                              color: ColorConst.themeColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

@@ -1,5 +1,6 @@
 import 'package:bvg_partner/modules/auth/forgot/forgot_password_screen.dart';
 import 'package:bvg_partner/modules/auth/registration/registration_screen.dart';
+import 'package:bvg_partner/modules/employee/dashboard/emp_dashboard.dart';
 import 'package:bvg_partner/routes/route_const.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -46,6 +47,13 @@ class AppRouterConfig{
         path: '/forgot',
         pageBuilder: (context, state) {
           return const MaterialPage(child: ForgotScreen());
+        },
+      ),
+      GoRoute(
+        name: RouteConst.empDashboardRoute,
+        path: '/empDashboardRoute',
+        pageBuilder: (context, state) {
+          return const MaterialPage(child: EmpDashboard());
         },
       ),
     ],

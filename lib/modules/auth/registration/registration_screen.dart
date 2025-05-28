@@ -1,13 +1,13 @@
-import 'package:bvg_partner/widgets/custom_snack.dart';
+import 'dart:io';
+
+import 'package:bvg_partner/modules/auth/registration/registration_provider.dart';
+import 'package:bvg_partner/routes/route_const.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-
 import '../../../constants/constants.dart';
-import '../../../routes/route_const.dart';
 import '../../../services/login_services/google_sign_in_service.dart';
 import '../../../widgets/widgets.dart';
-import '../login/login_provider.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -21,7 +21,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Consumer<LoginProvider>(
+      body: Consumer<RegistrationProvider>(
         builder: (context, provider, child) {
           return Container(
             padding: EdgeInsets.all(20),
@@ -65,24 +65,24 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             textInputType: TextInputType.emailAddress,
                             textCapitalization: TextCapitalization.none,
                             prefixeIcon: Icon(
-                              Icons.mail_outline_outlined,
+                              Icons.person_3_outlined,
                               color: ColorConst.greyFourth,
                             ),
                             title: "Name",
-                            controller: provider.emailController,
+                            controller: provider.nameController,
                             maxLength: 50,
                           ),
                           SizedBox(height: 6),
                           AppTextField(
                             textInputAction: TextInputAction.next,
-                            textInputType: TextInputType.emailAddress,
+                            textInputType: TextInputType.number,
                             textCapitalization: TextCapitalization.none,
                             prefixeIcon: Icon(
-                              Icons.mail_outline_outlined,
+                              Icons.phone_android,
                               color: ColorConst.greyFourth,
                             ),
                             title: "Mobile Number",
-                            controller: provider.emailController,
+                            controller: provider.phoneController,
                             maxLength: 50,
                           ),
                           SizedBox(height: 6),
@@ -95,19 +95,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               color: ColorConst.greyFourth,
                             ),
                             title: "Email Address",
-                            controller: provider.emailController,
+                            controller: provider.mailController,
                             maxLength: 50,
                           ),
                           SizedBox(height: 6),
                           AppTextField(
-                            textInputAction: TextInputAction.done,
+                            textInputAction: TextInputAction.next,
                             textInputType: TextInputType.emailAddress,
                             prefixeIcon: Icon(
                               Icons.password,
                               color: ColorConst.greyFourth,
                             ),
                             title: "Enter Password",
-                            controller: provider.passwordController,
+                            controller: provider.passController,
                             maxLength: 50,
                             showPassword: provider.showPassword,
                             sufixeIcon: IconButton(
@@ -135,63 +135,39 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               color: ColorConst.greyFourth,
                             ),
                             title: "Confirm Password",
-                            controller: provider.passwordController,
+                            controller: provider.confirmPassController,
                             maxLength: 50,
-                            showPassword: provider.showPassword,
-                            sufixeIcon: IconButton(
-                              onPressed: () {
-                                provider.togglePasswordVisibility();
-                              },
-                              icon:
-                              provider.showPassword
-                                  ? Icon(
-                                Icons.visibility_off_outlined,
-                                color: ColorConst.greyFourth,
-                              )
-                                  : Icon(
-                                Icons.visibility_outlined,
-                                color: ColorConst.greyFourth,
-                              ),
-                            ),
+                            showPassword: true,
+                            onChanged: (value){
+                              provider.matchPassword();
+                            },
                           ),
+                          Align(
+                               alignment: Alignment.centerLeft,
+                              child: Text(provider.passwordMatchError, style: TextStyle(color: Colors.redAccent, fontSize: 12))),
                           SizedBox(
                             width: double.infinity,
                             height: 45,
                             child: CustomButton(
-                              text: "Login",
-                              isLoading:
-                              provider.loginStatus == STATUSAPI.loading,
+                              text: "Register",
+                              // isLoading:
+                              // provider.loginStatus == STATUSAPI.loading,
                               onTap: () {
-                                if (!provider.checkValid()) {
-                                  showCustomSnackBar(
-                                    context,
-                                    message: provider.validationError,
-                                  );
-                                } else {
-                                  provider.login();
-                                }
+                                provider.addUser();
+                                // if (!provider.checkValid()) {
+                                //   showCustomSnackBar(
+                                //     context,
+                                //     message: provider.validationError,
+                                //   );
+                                // } else {
+                                //   provider.login();
+                                // }
                               },
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          InkWell(
-                            onTap: () {
-                              context.pushNamed(RouteConst.forgotPassScreenRoute);
-                            },
-                            borderRadius: BorderRadius.circular(20),
-                            child: Text(
-                              "Forgot Password ?",
-                              style: TextStyle(
-                                color: ColorConst.themeColor,
-                                fontFamily: AppFonts.themeFont,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
                             ),
                           ),
                           const SizedBox(height: 40),
                           Text(
-                            "Or Login with",
+                            "Or Sign in with",
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.black,
@@ -213,7 +189,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     onTap: () async{
                                       final user = await GoogleSignInProvider().signInWithGoogle();
                                       if (user != null) {
-                                        print('Signed in as ${user.displayName}');
+                                        print('Signed in as ${user}');
                                       }
                                     },
                                     borderRadius: BorderRadius.circular(20),
@@ -223,10 +199,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     onTap: () {},
                                     borderRadius: BorderRadius.circular(20),
                                     child: Image.asset(ConstImage.xLogin, fit: BoxFit.fill),
-                                  ),InkWell(
-                                    onTap: () {},
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: Image.asset(ConstImage.appleLogin, fit: BoxFit.fill),
+                                  ),Visibility(
+                                    visible: Platform.isIOS,
+                                    child: InkWell(
+                                      onTap: () {},
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: Image.asset(ConstImage.appleLogin, fit: BoxFit.fill),
+                                    ),
                                   ),
                                 ],
                               )
@@ -238,32 +217,40 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: Row(
-                    spacing: 5,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Already registered ?',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: AppFonts.themeFont,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        borderRadius: BorderRadius.circular(10),
-                        child: Text(
-                          "Login In",
+                  child: Container(
+                    padding: EdgeInsets.only(top: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white
+                    ),
+                    child: Row(
+                      spacing: 5,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Already registered ?',
                           style: TextStyle(
+                            color: Colors.black,
                             fontFamily: AppFonts.themeFont,
-                            color: ColorConst.themeColor,
-                            fontSize: 14,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ),
-                    ],
+                        InkWell(
+                          onTap: () {
+                            context.goNamed(RouteConst.loginScreenRoute);
+                          },
+                          borderRadius: BorderRadius.circular(10),
+                          child: Text(
+                            "Log In",
+                            style: TextStyle(
+                              fontFamily: AppFonts.themeFont,
+                              color: ColorConst.themeColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
